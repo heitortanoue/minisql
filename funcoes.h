@@ -6,9 +6,9 @@ typedef struct {
     char ***dados;
 } tabela;
 
-int *parametrosArquivo (char nome_do_arquivo[], int *nlin, int *ncol);
+void substring(char str[], char dest[], char str1[], char str2[]);
 
-char **parametrosTerminal ();
+int *parametrosArquivo (char nome_do_arquivo[], int *nlin, int *ncol);
 
 char **separaString (char str[]);
 
