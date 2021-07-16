@@ -2,9 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "funcoes.h"
-#define PASSOUAQUI printf("%s:%d\n", __FILE__, __LINE__);
 
-void substring(char str[], char dest[], char str1[], char str2[]) {
+int substring(char str[], char dest[], char str1[], char str2[]) {
     int i = 0;
     int ind1 = 0, ind2 = 0;
     while (str[i] != 0) {
@@ -47,15 +46,21 @@ void substring(char str[], char dest[], char str1[], char str2[]) {
             dest_counter++;
         }
         dest[dest_counter] = 0;
+        return 1;
+    } else {
+        return 0;
     }
-    return;
 }
 
-int main(void) {
-    char input[200];
-    fgets(input, 200, stdin);
-    char str_select[50], str_from[30], str_where[100];
-    substring(input, str_select, "select ", "from");
-    substring(input, str_from, "from ", "where");
-    substring(input, str_where, "where ", "\0");
-}
+// void colocarColunasStruct (tabela *t, FILE *fd) {
+//     char string_primeira_linha[200];
+//     fgets(string_primeira_linha, 200, fd);
+//     char* tok;
+//     tok = strtok(string_primeira_linha, "   ");
+//     int i = 0;
+//     while (tok != 0) {
+//         t->nome_colunas[i] = tok;
+//         printf("%s", t->nome_colunas[i]);
+//         i++;
+//     }
+// }
