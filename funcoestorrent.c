@@ -40,36 +40,18 @@ void destruir_tabela (tabela *tabela_utilizada, int nlin, int ncol){
     free(tabela_utilizada);
 }
 
-
-/*void colocarColunasStruct (tabela *t, FILE *fd) {
-    char string_primeira_linha[200];
-    fgets(string_primeira_linha, 200, fd);
-    char* tok;
-    const char s[4] = " ";
-    tok = strtok(string_primeira_linha, s);
-    printf("%s ", tok);
-    int i = 0;
-    while (tok != 0) {
-        //t->nome_colunas[i] = tok;
-        printf("%s ", tok);
-        tok = strtok(0, s);
-        i++;
-    }
-}*/
-
 void pegaDados (tabela *tabela_alocada, FILE *fd){
     int i = 0;
     int j = 0;
     int k = 0;
     int fimlinha = 0;
-    //colocarColunasStruct(tabela_alocada, fd);
     while(!feof(fd)){
         while(!fimlinha && !feof(fd)){
-            do{
+            do {
                 tabela_alocada -> dados[i][j][k] = fgetc(fd);
                 k++;
             } while(tabela_alocada -> dados[i][j][k - 1] != '\t' && tabela_alocada -> dados[i][j][k-1] != '\n' && !feof(fd));
-            if(tabela_alocada -> dados[i][j][k - 1] == '\n'){
+            if (tabela_alocada -> dados[i][j][k - 1] == '\n'){
                 fimlinha = 1;
             }
             tabela_alocada -> dados[i][j][k] = '\0';
@@ -101,35 +83,4 @@ void numLinColArquivo (FILE *fdlc, int *numLin, int *numcol){
     
     *numLin = lin + 1;
     *numcol = col;
-}
-
-int main (void){
-    FILE *fdlincol;
-    fdlincol = fopen("Trabalhos.tsv", "r"); //PRECISA DEIXAR O "Trabalhos.tsv" COMO PARÂMETRO UNIVERSAL
-    if (fdlincol == NULL){
-    fprintf(stderr, "Erro ao abrir o entradas.txt\n");
-    exit (-1);
-    }
-    int nlin, ncol;
-    numLinColArquivo(fdlincol, &nlin, &ncol);
-    fclose(fdlincol);
-    
-    FILE *fd;
-    fd = fopen("Trabalhos.tsv", "r");
-        if (fd == NULL){
-        fprintf(stderr, "Erro ao abrir o entradas.txt\n");
-        exit (-1);
-    }
-    tabela *docentes;
-
-    docentes = alocaDados(nlin, ncol);
-    pegaDados(docentes, fd);
-    
-    for (int m = 0; m < nlin; m++){
-        for (int l = 0; l < ncol; l++){
-            printf("%s\n", docentes -> dados[m][l]);
-        }
-    }
-    destruir_tabela(docentes, nlin, ncol);
-    fclose(fd);
 }

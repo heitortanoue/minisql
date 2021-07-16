@@ -3,11 +3,9 @@
 #define PASSOUAQUI printf("%s:%d\n", __FILE__, __LINE__);
 
 typedef struct {
-    char **nome_colunas;
     char ***dados;
 } tabela;
 
-void colocarColunasStruct (tabela *t, FILE *fd);
 
 int substring(char str[], char dest[], char str1[], char str2[]);
 

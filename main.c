@@ -15,5 +15,35 @@ int main(void) {
         tem_where = 0;
     }
 
+    FILE *fdlincol;
+    fdlincol = fopen("Trabalhos.tsv", "r"); //PRECISA DEIXAR O "Trabalhos.tsv" COMO PARÂMETRO UNIVERSAL
+    if (fdlincol == NULL){
+    fprintf(stderr, "Erro ao abrir o entradas.txt\n");
+    exit (-1);
+    }
+    int nlin, ncol;
+    numLinColArquivo(fdlincol, &nlin, &ncol);
+    fclose(fdlincol);
+    
+    FILE *fd;
+    fd = fopen("Trabalhos.tsv", "r");
+        if (fd == NULL){
+        fprintf(stderr, "Erro ao abrir o entradas.txt\n");
+        exit (-1);
+    }
+    tabela *docentes;
+
+    docentes = alocaDados(nlin, ncol);
+    pegaDados(docentes, fd);
+    
+    for (int m = 0; m < nlin; m++){
+        for (int l = 0; l < ncol; l++){
+            printf("%s\n", docentes -> dados[m][l]);
+        }
+    }
+
+    destruir_tabela(docentes, nlin, ncol);
+    fclose(fd);
+    
     printf("%s\n%s\n%s", str_select, str_from, str_where);
 }

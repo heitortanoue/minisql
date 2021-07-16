@@ -9,7 +9,7 @@ int substring(char str[], char dest[], char str1[], char str2[]) {
     while (str[i] != 0) {
         if (str[i] == str1[0] && ind1 == 0) {
             int e_igual = 1;
-            for (int j = 0; j < strlen(str1); j++) {
+            for (unsigned int j = 0; j < strlen(str1); j++) {
                 if (str[i] != str1[j]) {
                     e_igual = 0;
                     break;
@@ -20,12 +20,12 @@ int substring(char str[], char dest[], char str1[], char str2[]) {
                 ind1 = i;
             }
         }
-        if (str2 == "\0") {
+        if (strcmp(str2, "\0") == 0) {
             ind2 = strlen(str) - 1;
         } else if (str[i] == str2[0] && ind2 == 0) {
             int tempind = i;
             int e_igual = 1;
-            for (int j = 0; j < strlen(str2); j++) {
+            for (unsigned int j = 0; j < strlen(str2); j++) {
                 if (str[i] != str2[j]) {
                     e_igual = 0;
                     break;
@@ -51,16 +51,3 @@ int substring(char str[], char dest[], char str1[], char str2[]) {
         return 0;
     }
 }
-
-// void colocarColunasStruct (tabela *t, FILE *fd) {
-//     char string_primeira_linha[200];
-//     fgets(string_primeira_linha, 200, fd);
-//     char* tok;
-//     tok = strtok(string_primeira_linha, "   ");
-//     int i = 0;
-//     while (tok != 0) {
-//         t->nome_colunas[i] = tok;
-//         printf("%s", t->nome_colunas[i]);
-//         i++;
-//     }
-// }
