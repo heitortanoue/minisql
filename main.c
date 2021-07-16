@@ -15,35 +15,35 @@ int main(void) {
         tem_where = 0;
     }
 
-    FILE *fdlincol;
-    fdlincol = fopen("Trabalhos.tsv", "r"); //PRECISA DEIXAR O "Trabalhos.tsv" COMO PARÂMETRO UNIVERSAL
-    if (fdlincol == NULL){
-    fprintf(stderr, "Erro ao abrir o entradas.txt\n");
-    exit (-1);
-    }
     int nlin, ncol;
-    numLinColArquivo(fdlincol, &nlin, &ncol);
-    fclose(fdlincol);
+    numLinColArquivo("Trabalhos.tsv", &nlin, &ncol);
     
     FILE *fd;
     fd = fopen("Trabalhos.tsv", "r");
-        if (fd == NULL){
+    if (fd == NULL) {
         fprintf(stderr, "Erro ao abrir o entradas.txt\n");
         exit (-1);
     }
     tabela *docentes;
-
     docentes = alocaDados(nlin, ncol);
     pegaDados(docentes, fd);
     
-    for (int m = 0; m < nlin; m++){
-        for (int l = 0; l < ncol; l++){
-            printf("%s\n", docentes -> dados[m][l]);
-        }
-    }
+    // for (int m = 0; m < nlin; m++){
+    //     for (int l = 0; l < ncol; l++){
+    //         printf("%s\n", docentes -> dados[m][l]);
+    //     }
+    // }
 
     destruir_tabela(docentes, nlin, ncol);
     fclose(fd);
     
-    printf("%s\n%s\n%s", str_select, str_from, str_where);
+    printf("%s\n%s\n%s\n", str_select, str_from, str_where);
+
+    int size;
+    char **arr_strings;
+    arr_strings = separaString(str_from, ", ", &size);
+
+    for (int i = 0; i < size; i++) {
+        printf("%s\n", arr_strings[i]);
+    }
 }

@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include<string.h>
+#include <string.h>
 #include "funcoes.h"
 #define NUMCARACT (256)
 
@@ -40,6 +40,8 @@ void destruir_tabela (tabela *tabela_utilizada, int nlin, int ncol){
     free(tabela_utilizada);
 }
 
+
+
 void pegaDados (tabela *tabela_alocada, FILE *fd){
     int i = 0;
     int j = 0;
@@ -64,7 +66,9 @@ void pegaDados (tabela *tabela_alocada, FILE *fd){
     }
 }
 
-void numLinColArquivo (FILE *fdlc, int *numLin, int *numcol){
+void numLinColArquivo (char *arquivo, int *numLin, int *numcol){
+    FILE *fdlc;
+    fdlc = fopen(arquivo, "r");
     char c;
     int lin = 0;
     int col = 0;
@@ -83,4 +87,5 @@ void numLinColArquivo (FILE *fdlc, int *numLin, int *numcol){
     
     *numLin = lin + 1;
     *numcol = col;
+    fclose(fdlc);
 }

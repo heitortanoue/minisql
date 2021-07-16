@@ -51,3 +51,35 @@ int substring(char str[], char dest[], char str1[], char str2[]) {
         return 0;
     }
 }
+
+int contaOcorrenciasString (char *str, char *pedaco) {
+    char copiastring[strlen(str)];
+    strcpy(copiastring, str);
+    char *token;
+    token = strtok(str, pedaco);
+    int ocorrencias = 1;
+    while (token != NULL) {
+        token = strtok(NULL, pedaco);
+        ocorrencias++;
+    }
+    return ocorrencias;
+}
+
+// CONSERTAR STRTOK
+char **separaString (char *str, char *espacador, int *size) {
+    char *token = strtok(str, espacador);
+    int tamanho_array = contaOcorrenciasString(str, espacador);
+    char **array = malloc(sizeof (char *) * tamanho_array);
+    for (unsigned int i = 0; i < tamanho_array; i++) {
+        array[i] = malloc(sizeof(char) * 64); 
+    }
+    int i = 0;
+    while (token != NULL) {
+        strcpy(array[i], token);
+        printf("[%d] %s foi copiado\n", i, array[i]);
+        token = strtok(NULL, espacador);
+        i++;
+    }
+    *size = tamanho_array;
+    return array;
+}
