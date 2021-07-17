@@ -57,28 +57,17 @@ int contaOcorrenciasString (char *str, char *pedaco) {
     for (i = 0; i < l1 - l2 + 1; i++) {
         if (strstr(str + i, pedaco) == str + i) {
         ocorrencias++;
-        i = i + l2 -1;
+        i = i + l2 - 1;
         }
     }
     return ocorrencias;
 }
 
-char **separaString (char *str_inp, char *espacador, int *size) {
-    char *tok;
-    char str[strlen(str_inp)];
-    strcpy(str, str_inp);
-    int tamanho_array = contaOcorrenciasString(str, espacador);
-    tok = strtok(str, espacador);
-    char **array = malloc(sizeof (char *) * tamanho_array);
-    for (unsigned int i = 0; i < tamanho_array; i++) {
-        array[i] = malloc(sizeof(char) * 64); 
-    }
-    int i = 0;
-    while (tok != 0) {
-        strcpy(array[i], tok);
-        tok = strtok(0, espacador);
-        i++;
-    }
-    *size = tamanho_array;
-    return array;
-}
+// char *separaString (char *str_inp, char *espacador, char *tok) {
+//     tok = strtok(str_inp, espacador);
+//     int i = 0;
+//     while (tok != 0) {
+//         tok = strtok(0, espacador);
+//         i++;
+//     }
+// }
