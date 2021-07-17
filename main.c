@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 #include"funcoes.h"
 
 int main(void) {
@@ -15,35 +16,41 @@ int main(void) {
         tem_where = 0;
     }
 
-    int nlin, ncol;
-    numLinColArquivo("Trabalhos.tsv", &nlin, &ncol);
-    
-    FILE *fd;
-    fd = fopen("Trabalhos.tsv", "r");
-    if (fd == NULL) {
-        fprintf(stderr, "Erro ao abrir o entradas.txt\n");
-        exit (-1);
+    int num_arquivos = 0;
+    char **arr_nomes_arquivos;
+    arr_nomes_arquivos = separaString(str_from, ", ", &num_arquivos);
+    for (int i = 0; i < num_arquivos; i++) {
+        int nlin, ncol;
+        char arquivo_atual[strlen(arr_nomes_arquivos[i]) + 4];
+        strcpy(arquivo_atual, arr_nomes_arquivos[i]);
+        strcat(arquivo_atual, ".tsv");
+        numLinColArquivo(arquivo_atual, &nlin, &ncol);
+        FILE *fd;
+        fd = fopen(arquivo_atual, "r");
+        if (fd == NULL) {
+            fprintf(stderr, "Erro ao abrir o %s.tsv\n", arquivo_atual);
+            exit (-1);
+        }
+        tabela *tabela_arquivo;
+        tabela_arquivo = alocaDados(nlin, ncol);
+        pegaDados(tabela_arquivo, fd);
+        
+        for (int m = 0; m < nlin; m++){
+            for (int l = 0; l < ncol; l++){
+                printf("%s\n", tabela_arquivo -> dados[m][l]);
+            }
+        }
+            destruir_tabela(tabela_arquivo, nlin, ncol);
+            fclose(fd);  
     }
-    tabela *docentes;
-    docentes = alocaDados(nlin, ncol);
-    pegaDados(docentes, fd);
-    
-    // for (int m = 0; m < nlin; m++){
-    //     for (int l = 0; l < ncol; l++){
-    //         printf("%s\n", docentes -> dados[m][l]);
-    //     }
+
+    // for (int i = 0; i < num_arquivos; i++) {
+    //     destruir_tabela(tabela_arquivo, nlin, ncol);
+    //     fclose(fd);
     // }
-
-    destruir_tabela(docentes, nlin, ncol);
-    fclose(fd);
-    
-    printf("%s\n%s\n%s\n", str_select, str_from, str_where);
-
-    int size;
-    char **arr_strings;
-    arr_strings = separaString(str_from, ", ", &size);
-
-    for (int i = 0; i < size; i++) {
-        printf("%s\n", arr_strings[i]);
+    for (int i = 0; i < num_arquivos; i++) {
+        free(arr_nomes_arquivos[i]);
     }
+    free(arr_nomes_arquivos);
+
 }
