@@ -1,5 +1,6 @@
 #include"arquivo_tabela.h"
 #include"nova_string.h"
+#include"filtro.h"
 #define PASSOUAQUI printf("%s:%d\n", __FILE__, __LINE__);
 
 int main(void) {
@@ -15,7 +16,7 @@ int main(void) {
         substring(input, str_from, "from ", "\0");
         tem_where = 0;
     }
-
+    PASSOUAQUI
     int num_arquivos = contaOcorrenciasString(str_from, ", ");
     char nomes_arquivos[num_arquivos][20];
     char *tok;
@@ -28,10 +29,15 @@ int main(void) {
     }
 
     tabela *tabelas[num_arquivos];
+    PASSOUAQUI
     for (int i = 0; i < num_arquivos; i++) {
         tabelas[i] = abreArquivoCriaTabela(nomes_arquivos[i]);
     }
 
+    for (int i = 0; i < num_arquivos; i++) {
+        printf("[%s]\n", tabelas[i]->nome_arquivo);
+    }
+    PASSOUAQUI
     int num_colunas_selecionadas = contaOcorrenciasString(str_select, ", ");
     char colunas_selecionadas[num_colunas_selecionadas][50];
     char *tok1;
@@ -42,20 +48,8 @@ int main(void) {
         tok1 = strtok(0, ", ");
         count1++;
     }
-
-    // if (tem_where) {
-        
-    //     for (int i = 0; i < num_condicoes; i++) {
-    //         printf("%s\n", condicoes[i]);
-    //     }
-    // }
-
-    // for (int i = 0; i < num_arquivos; i++) {
-    //     for (int m = 0; m < tabelas[i]->nlin; m++) {
-    //         for (int l = 0; l < tabelas[i]->ncol; l++) {
-    //             printf("%s\n", tabelas[i]->dados[m][l]);
-    //         }
-    //     }
+    // for (int i = 0; i < num_colunas_selecionadas; i++) {
+    //     printf("[%s ()]\n", colunas_selecionadas[i], indexColunaSelecionada(tabelas, num_arquivos, colunas_selecionadas[i]));
     // }
 
     for (int i = 0; i < num_arquivos; i++) {

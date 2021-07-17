@@ -53,6 +53,7 @@ tabela *abreArquivoCriaTabela (char *nome_arquivo) {
         tabela_arquivo = alocaDadosTabela(nlin, ncol);
         pegaDadosArquivo(tabela_arquivo, fd);
         tabela_arquivo->arquivo = fd;
+        strcpy(tabela_arquivo->nome_arquivo, nome_arquivo);
         return tabela_arquivo;
 }
 

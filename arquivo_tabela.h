@@ -7,6 +7,7 @@
 typedef struct {
     int nlin;
     int ncol;
+    char nome_arquivo[20];
     FILE *arquivo;
     char ***dados;
 } tabela;
