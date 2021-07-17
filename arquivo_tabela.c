@@ -72,7 +72,7 @@ void pegaDadosArquivo (tabela *tabela_alocada, FILE *fd){
             if (tabela_alocada -> dados[i][j][k - 1] == '\n'){
                 fimlinha = 1;
             }
-            tabela_alocada -> dados[i][j][k] = '\0';
+            tabela_alocada -> dados[i][j][k - 1] = '\0';
             k = 0;
             j++;
         }

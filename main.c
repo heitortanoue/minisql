@@ -16,7 +16,7 @@ int main(void) {
         substring(input, str_from, "from ", "\0");
         tem_where = 0;
     }
-    PASSOUAQUI
+
     int num_arquivos = contaOcorrenciasString(str_from, ", ");
     char nomes_arquivos[num_arquivos][20];
     char *tok;
@@ -29,7 +29,7 @@ int main(void) {
     }
 
     tabela *tabelas[num_arquivos];
-    PASSOUAQUI
+
     for (int i = 0; i < num_arquivos; i++) {
         tabelas[i] = abreArquivoCriaTabela(nomes_arquivos[i]);
     }
@@ -37,7 +37,7 @@ int main(void) {
     for (int i = 0; i < num_arquivos; i++) {
         printf("[%s]\n", tabelas[i]->nome_arquivo);
     }
-    PASSOUAQUI
+
     int num_colunas_selecionadas = contaOcorrenciasString(str_select, ", ");
     char colunas_selecionadas[num_colunas_selecionadas][50];
     char *tok1;
@@ -48,9 +48,10 @@ int main(void) {
         tok1 = strtok(0, ", ");
         count1++;
     }
-    // for (int i = 0; i < num_colunas_selecionadas; i++) {
-    //     printf("[%s ()]\n", colunas_selecionadas[i], indexColunaSelecionada(tabelas, num_arquivos, colunas_selecionadas[i]));
-    // }
+
+    for (int i = 0; i < num_colunas_selecionadas; i++) {
+        printf("[%s (%d)]\n", colunas_selecionadas[i], indexColunaSelecionada(tabelas, num_arquivos, colunas_selecionadas[i]));
+    }
 
     for (int i = 0; i < num_arquivos; i++) {
         destruirTabela(tabelas[i], tabelas[i]->nlin, tabelas[i]->ncol);
