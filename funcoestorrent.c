@@ -41,7 +41,7 @@ void destruir_tabela (tabela *tabela_utilizada, int nlin, int ncol){
 }
 
 
-/*void colocarColunasStruct (tabela *t, FILE *fd) {
+void colocarColunasStruct (tabela *t, FILE *fd) {
     char string_primeira_linha[200];
     fgets(string_primeira_linha, 200, fd);
     char* tok;
@@ -55,14 +55,14 @@ void destruir_tabela (tabela *tabela_utilizada, int nlin, int ncol){
         tok = strtok(0, s);
         i++;
     }
-}*/
+}
 
 void pegaDados (tabela *tabela_alocada, FILE *fd){
     int i = 0;
     int j = 0;
     int k = 0;
     int fimlinha = 0;
-    //colocarColunasStruct(tabela_alocada, fd);
+    colocarColunasStruct(tabela_alocada, fd);
     while(!feof(fd)){
         while(!fimlinha && !feof(fd)){
             do{
