@@ -22,4 +22,6 @@ void pegaDadosArquivo (tabela *tabela_alocada, FILE *fd);
 
 void numLinColArquivo (char *arquivo, int *numLin, int *numcol);
 
+void imprimirTabelaResultado (tabela **tabelas, char *colunas_selecionadas[], int num_arquivos, int num_colunas);
+
 #endif
