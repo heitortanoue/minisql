@@ -1,7 +1,9 @@
 #include"filtro.h"
-#define PASSOUAQUI printf("%s:%d\n", __FILE__, __LINE__);
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-int indexColunaSelecionada(tabela **tabelas, int num_tabelas, char *qual_coluna){
+int indexColunaSelecionada(tabela **tabelas, int num_tabelas, char *qual_coluna, int *index_tabela){
     char str_depois_corte[20];
     char str_antes_corte[15];
     int j = 0, k = 0;
@@ -39,5 +41,6 @@ int indexColunaSelecionada(tabela **tabelas, int num_tabelas, char *qual_coluna)
         }
     }
 
+    *index_tabela = index_selecionado;
     return ncol_filtro;
 }

@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "filtro.h": "c",
+        "arquivo_tabela.h": "c",
+        "nova_string.h": "c"
+    }
+}

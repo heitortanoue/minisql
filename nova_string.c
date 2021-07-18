@@ -1,4 +1,7 @@
 #include"nova_string.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 int substring (char str[], char dest[], char str1[], char str2[]) {
     int i = 0;
