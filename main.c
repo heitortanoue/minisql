@@ -42,6 +42,7 @@ int main(void) {
     //     printf("[%s (%d x %d)]\n", tabelas[i]->nome_arquivo, tabelas[i]->nlin, tabelas[i]->ncol);
     // }
     // CRIAÇÃO DE UM ARRAY COM NOMES DAS COLUNAS SELECIONADAS NO SELECT
+    
     int num_colunas_selecionadas = contaOcorrenciasString(str_select, ", ");
     char *colunas_selecionadas[num_colunas_selecionadas];
     char *tok1;
@@ -58,7 +59,8 @@ int main(void) {
     // }
 
     imprimirTabelaResultado(tabelas, colunas_selecionadas, num_arquivos, num_colunas_selecionadas);
-
+    
+    defineFiltros (tabelas, str_where);
     for (int i = 0; i < num_arquivos; i++) {
         fclose(tabelas[i]->arquivo);
         destruirTabela(tabelas[i], tabelas[i]->nlin, tabelas[i]->ncol);       
