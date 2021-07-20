@@ -49,6 +49,8 @@ int main(void) {
     int num_filtros = contaOcorrenciasString(str_where, " and");
     char **filtros = separaString(str_where, " and");
 
+    separarFiltros(tabelas, num_arquivos, filtros, num_filtros);
+
     destruirArrayStrings(nomes_arquivos, num_arquivos);
     destruirArrayStrings(colunas_selecionadas, num_colunas_selecionadas);
     destruirArrayStrings(filtros, num_filtros);

@@ -1,4 +1,5 @@
 #include"filtro.h"
+#include"nova_string.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -44,4 +45,30 @@ int indexColunaSelecionada(tabela **tabelas, int num_tabelas, char *qual_coluna,
 
     *index_tabela = index_selecionado;
     return ncol_filtro;
+}
+
+void separarFiltros (tabela **tabelas, int num_tabelas, char **filtros, int num_filtros) {
+    char ***filtros_separados = malloc(sizeof(char ***) * 1);
+    for (int i = 0; i < num_filtros; i++) {
+        filtros_separados[i] = separaString(filtros[i], " =");
+    }
+
+    for (int i = 0; i < num_filtros; i++) {
+        if (strchr(filtros_separados[i][1], '\"')) {
+            // COMPARAÇÃO VALORES
+            substring(filtros_separados[i][1], filtros_separados[i][1], "\"", "\"");
+            printf("]\n[C. VALORES: %s e %s]\n", filtros_separados[i][0], filtros_separados[i][1]);
+        } else {
+            // COMPARAÇÃO CÉLULAS
+            int ind1, ind2;
+            indexColunaSelecionada(tabelas, num_tabelas, filtros_separados[i][0], &ind1);
+            indexColunaSelecionada(tabelas, num_tabelas, filtros_separados[i][1], &ind2);
+            printf("[C. CELULAS: %s(%d) e %s(%d)]\n", filtros_separados[i][0], ind1, filtros_separados[i][1], ind2);
+        }
+    }
+
+    for (int i = 0; i < num_filtros; i++) {
+        destruirArrayStrings(filtros_separados[i], 2);
+    }
+    free(filtros_separados);
 }

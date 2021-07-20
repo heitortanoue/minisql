@@ -90,7 +90,6 @@ char **separaString (char *str_inp, char *espacador) {
         h++;
     }
     string_formatada[h] = '\0';
-    printf("(%s)\n", string_formatada);
     
     char **arr_dest = malloc(sizeof(char **));
     for (int i = 0; i < num_strings; i++) {
@@ -102,7 +101,6 @@ char **separaString (char *str_inp, char *espacador) {
     int i = 0;
     while (pont_str != NULL){
         strcpy(arr_dest[i], pont_str);
-        printf("(%s)\n", arr_dest[i]);
         int c = 0;
         i++;
         pont_str = strtok(NULL, "&");   
