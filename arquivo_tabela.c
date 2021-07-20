@@ -47,6 +47,7 @@ tabela *abreArquivoCriaTabela (char *nome_arquivo) {
         strcpy(arquivo_atual, nome_arquivo);
         strcat(arquivo_atual, ".tsv");
         numLinColArquivo(arquivo_atual, &nlin, &ncol);
+        printf("%d %d\n", nlin, ncol);
         FILE *fd;
         fd = fopen(arquivo_atual, "r");
         if (fd == NULL) {

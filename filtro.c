@@ -45,7 +45,8 @@ int indexColunaSelecionada(tabela **tabelas, int num_tabelas, char *qual_coluna,
     return ncol_filtro;
 }
 
-void defineFiltros (tabela **tabelas, char where[]){ //filtro **
+
+filtro **defineFiltros (tabela **tabelas, char where[]){
     int qnt_filtros = contaOcorrenciasString(where, "and");
     char where_sem_and[strlen(where)];
     int g = 0;
@@ -74,4 +75,35 @@ void defineFiltros (tabela **tabelas, char where[]){ //filtro **
         i++;
         pont_str = strtok(NULL, "/");   
     }
+    filtro **todos_filtros; //##DAR MALLOC
+    for (int j = 0; j < qnt_filtros; j++){
+        int k = 0;
+        int passou_igual = 0;
+        while (filtros_separados[j][k] != '\0'){
+            if (filtros_separados[j][k] == '='){
+                passou_igual = 1;
+                k += 2;
+            }
+            if (passou_igual && filtros_separados[j][k] == '"'){
+                k++;
+                int l = 0;
+                while(filtros_separados[j][k] != '"'){
+                    todos_filtros[j]->tipo = 0;
+                    todos_filtros[j]->ntabela = j; // ### TAMBÉM NÃO SEI
+                    todos_filtros[j]->local_caract = 0; // ### COMO FAZ PARA FAZER ISSO? NÃO SEI
+                    todos_filtros[j]->caracteristica[l] = filtros_separados[j][k];
+                    l++;
+                    k++;
+                }
+            } else if(passou_igual){
+                int m = 0;
+                todos_filtros[j]->tipo = 1;
+                /*while(){
+
+                }*/
+            }
+            k++;
+        }
+    }
+    return todos_filtros;
 } //Progs.Nivel = "6" and Progs.Programa = Docentes.CodigodoPPG and Progs.Programa = Trabalhos.CodigodoPPG and Trabalhos.Orientador = Docentes.Nome

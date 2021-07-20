@@ -58,7 +58,7 @@ int main(void) {
     //     printf("[%s (%d)]\n", colunas_selecionadas[i], indexColunaSelecionada(tabelas, num_arquivos, colunas_selecionadas[i], &alo));
     // }
 
-    imprimirTabelaResultado(tabelas, colunas_selecionadas, num_arquivos, num_colunas_selecionadas);
+    //imprimirTabelaResultado(tabelas, colunas_selecionadas, num_arquivos, num_colunas_selecionadas);
     
     defineFiltros (tabelas, str_where);
     for (int i = 0; i < num_arquivos; i++) {

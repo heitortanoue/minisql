@@ -15,5 +15,6 @@ typedef struct {
     //int local[2];
     int local_compara[2]; 
 } filtro;
-void defineFiltros (tabela **tabelas, char where[]); //filtro **
+
+filtro **defineFiltros (tabela **tabelas, char where[]);
 #endif
