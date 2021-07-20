@@ -5,7 +5,7 @@
 
 int indexColunaSelecionada(tabela **tabelas, int num_tabelas, char *qual_coluna, int *index_tabela);
 
-void separarFiltros (tabela **tabelas, int num_tabelas, char **filtros, int num_filtros);
+void FiltrarImprimir (tabela **tabelas, int num_tabelas, char **filtros, int num_filtros, char** colunas_selecionadas, int num_colunas);
 
 // typedef struct {
 //     int tipo; // 0-CARACT 1-COMPARA
