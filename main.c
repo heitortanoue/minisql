@@ -8,10 +8,10 @@
 
 int main(void) {
     // ENTRADA STRING E DIVISÃO DAS PARTES SELECT, FROM E WHERE
-    char input[1024];
+    char input[1500];
     fgets(input, 1024, stdin);
     int tem_where = 1;
-    char str_select[384], str_from[128], str_where[512];
+    char str_select[500], str_from[500], str_where[500];
     substring(input, str_select, "select ", "from");
     if (substring(input, str_from, "from ", "where")) {
         substring(input, str_where, "where ", "\0");
@@ -21,16 +21,9 @@ int main(void) {
     }
 
     // CRIAÇÃO DE UM ARRAY COM NOMES DOS ARQUIVOS DO FROM
-    int num_arquivos = contaOcorrenciasString(str_from, ", ");
-    char *nomes_arquivos[num_arquivos];
-    char *tok;
-    tok = strtok(str_from, ", ");
-    int count = 0;
-    while (tok != 0) {
-        nomes_arquivos[count] = tok;
-        tok = strtok(0, ", ");
-        count++;
-    }
+    int num_arquivos = contaOcorrenciasString(str_from, ",");
+    char **nomes_arquivos;
+    nomes_arquivos = separaString(str_from, ",");
 
     // CRIAÇÃO DE UMA TABELA PARA CADA ARQUIVO COM SEUS DADOS
     tabela *tabelas[num_arquivos];
@@ -41,24 +34,29 @@ int main(void) {
     // for (int i = 0; i < num_arquivos; i++) {
     //     printf("[%s (%d x %d)]\n", tabelas[i]->nome_arquivo, tabelas[i]->nlin, tabelas[i]->ncol);
     // }
+
     // CRIAÇÃO DE UM ARRAY COM NOMES DAS COLUNAS SELECIONADAS NO SELECT
-    int num_colunas_selecionadas = contaOcorrenciasString(str_select, ", ");
-    char *colunas_selecionadas[num_colunas_selecionadas];
-    char *tok1;
-    tok1 = strtok(str_select, ", ");
-    int count1 = 0;
-    while (tok1 != 0) {
-        colunas_selecionadas[count1] = tok1;
-        tok1 = strtok(0, ", ");
-        count1++;
-    }
+    int num_colunas_selecionadas = contaOcorrenciasString(str_select, ",");
+    char **colunas_selecionadas;
+    colunas_selecionadas = separaString(str_select, ",");
+
     // for (int i = 0; i < num_colunas_selecionadas; i++) {
     //     int alo;
     //     printf("[%s (%d)]\n", colunas_selecionadas[i], indexColunaSelecionada(tabelas, num_arquivos, colunas_selecionadas[i], &alo));
     // }
 
-    imprimirTabelaResultado(tabelas, colunas_selecionadas, num_arquivos, num_colunas_selecionadas);
 
+    if (tem_where) {
+        int num_filtros = contaOcorrenciasString(str_where, " and");
+        char **filtros = separaString(str_where, " and");
+        FiltrarImprimir(tabelas, num_arquivos, filtros, num_filtros, colunas_selecionadas, num_colunas_selecionadas);
+        destruirArrayStrings(filtros, num_filtros);
+    } else {
+        imprimirTabelaResultado(tabelas, colunas_selecionadas, num_arquivos, num_colunas_selecionadas);
+    }
+
+    destruirArrayStrings(nomes_arquivos, num_arquivos);
+    destruirArrayStrings(colunas_selecionadas, num_colunas_selecionadas);
     for (int i = 0; i < num_arquivos; i++) {
         fclose(tabelas[i]->arquivo);
         destruirTabela(tabelas[i], tabelas[i]->nlin, tabelas[i]->ncol);       

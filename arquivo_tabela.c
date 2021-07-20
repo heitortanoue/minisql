@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #define NUMCARACT (256)
+#define PASSOUAQUI printf("%s:%d\n", __FILE__, __LINE__);
 
 tabela *alocaDadosTabela (int nlin, int ncol) {
     tabela *dados_alocados = malloc (sizeof(tabela) * 1);
@@ -42,23 +43,31 @@ void destruirTabela (tabela *tabela_utilizada, int nlin, int ncol){
 
 
 tabela *abreArquivoCriaTabela (char *nome_arquivo) {
-        int nlin, ncol;
-        char arquivo_atual[strlen(nome_arquivo) + 4];
-        strcpy(arquivo_atual, nome_arquivo);
-        strcat(arquivo_atual, ".tsv");
-        numLinColArquivo(arquivo_atual, &nlin, &ncol);
-        FILE *fd;
-        fd = fopen(arquivo_atual, "r");
-        if (fd == NULL) {
-            fprintf(stderr, "Erro ao abrir o %s\n", arquivo_atual);
-            exit (-1);
+    int nlin, ncol;
+    char extensao[] = ".tsv";
+    char arquivo_atual[strlen(nome_arquivo) + strlen(extensao) + 1];
+    int ext_cont = 0;
+    for (int i = 0; i < strlen(nome_arquivo) + strlen(extensao) + 1; i++) {
+        if (i < strlen(nome_arquivo)) {
+            arquivo_atual[i] = nome_arquivo[i];
+        } else {
+            arquivo_atual[i] = extensao[ext_cont];
+            ext_cont++;
         }
-        tabela *tabela_arquivo;
-        tabela_arquivo = alocaDadosTabela(nlin, ncol);
-        pegaDadosArquivo(tabela_arquivo, fd);
-        tabela_arquivo->arquivo = fd;
-        strcpy(tabela_arquivo->nome_arquivo, nome_arquivo);
-        return tabela_arquivo;
+    }
+    numLinColArquivo(arquivo_atual, &nlin, &ncol);
+    FILE *fd;
+    fd = fopen(arquivo_atual, "r");
+    if (fd == NULL) {
+        fprintf(stderr, "Erro ao abrir o %s\n", arquivo_atual);
+        exit (-1);
+    }
+    tabela *tabela_arquivo;
+    tabela_arquivo = alocaDadosTabela(nlin, ncol);
+    pegaDadosArquivo(tabela_arquivo, fd);
+    tabela_arquivo->arquivo = fd;
+    strcpy(tabela_arquivo->nome_arquivo, nome_arquivo);
+    return tabela_arquivo;
 }
 
 
@@ -88,8 +97,14 @@ void pegaDadosArquivo (tabela *tabela_alocada, FILE *fd){
 
 
 void numLinColArquivo (char *arquivo, int *numLin, int *numcol){
+    char copia_arquivo[strlen(arquivo) + 1];
+    strcpy(copia_arquivo, arquivo);
     FILE *fdlc;
-    fdlc = fopen(arquivo, "r");
+    fdlc = fopen(copia_arquivo, "r");
+    if (fdlc == NULL) {
+        fprintf(stderr, "ERRO AO ABRIR %s\n", copia_arquivo);
+        exit(-1);
+    }
     char c;
     int lin = 0;
     int col = 0;
@@ -100,7 +115,7 @@ void numLinColArquivo (char *arquivo, int *numLin, int *numcol){
             col++;
         }
 
-        if(c == '\n'){
+        if (c == '\n'){
             lin++;
             passou = 1;
         }
