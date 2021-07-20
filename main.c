@@ -8,10 +8,10 @@
 
 int main(void) {
     // ENTRADA STRING E DIVISÃO DAS PARTES SELECT, FROM E WHERE
-    char input[1024];
+    char input[1500];
     fgets(input, 1024, stdin);
     int tem_where = 1;
-    char str_select[384], str_from[128], str_where[512];
+    char str_select[500], str_from[500], str_where[500];
     substring(input, str_select, "select ", "from");
     if (substring(input, str_from, "from ", "where")) {
         substring(input, str_where, "where ", "\0");
