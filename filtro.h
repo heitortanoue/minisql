@@ -4,6 +4,7 @@
 #include "nova_string.h"
 
 int indexColunaSelecionada(tabela **tabelas, int num_tabelas, char *qual_coluna, int *index_tabela);
+
 typedef struct {
     int tipo; // 0-CARACT 1-COMPARA
     int ntabela;
@@ -15,5 +16,7 @@ typedef struct {
     //int local[2];
     int local_compara[2]; 
 } filtro;
+
 void defineFiltros (tabela **tabelas, char where[]); //filtro **
+
 #endif

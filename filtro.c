@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #define PASSOUAQUI printf("%s:%d\n", __FILE__, __LINE__);
+
 int indexColunaSelecionada(tabela **tabelas, int num_tabelas, char *qual_coluna, int *index_tabela){
     char str_depois_corte[20];
     char str_antes_corte[15];

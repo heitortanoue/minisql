@@ -8,6 +8,8 @@ int substring (char str[], char dest[], char str1[], char str2[]);
 
 int contaOcorrenciasString (char *str, char *pedaco);
 
-//void separaString (char *str_inp, char *arr_dest[], char *espacador);
+char **separaString (char *str_inp, char *espacador);
+
+void destruirArrayStrings (char **arr_str, int num_strings);
 
 #endif
