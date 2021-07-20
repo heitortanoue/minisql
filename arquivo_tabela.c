@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #define NUMCARACT (256)
+#define PASSOUAQUI printf("%s:%d\n", __FILE__, __LINE__);
 
 tabela *alocaDadosTabela (int nlin, int ncol) {
     tabela *dados_alocados = malloc (sizeof(tabela) * 1);
@@ -43,9 +44,9 @@ void destruirTabela (tabela *tabela_utilizada, int nlin, int ncol){
 
 tabela *abreArquivoCriaTabela (char *nome_arquivo) {
         int nlin, ncol;
-        char arquivo_atual[strlen(nome_arquivo) + 4];
-        strcpy(arquivo_atual, nome_arquivo);
-        strcat(arquivo_atual, ".tsv");
+        char arquivo_atual[strlen(nome_arquivo) + 5];
+        sprintf(arquivo_atual, "%s%s", nome_arquivo, ".tsv");
+        printf("[TENTANDO CRIAR %s]\n", arquivo_atual);
         numLinColArquivo(arquivo_atual, &nlin, &ncol);
         FILE *fd;
         fd = fopen(arquivo_atual, "r");
@@ -58,6 +59,7 @@ tabela *abreArquivoCriaTabela (char *nome_arquivo) {
         pegaDadosArquivo(tabela_arquivo, fd);
         tabela_arquivo->arquivo = fd;
         strcpy(tabela_arquivo->nome_arquivo, nome_arquivo);
+        printf("[TABELA %s CRIADA]\n", nome_arquivo);
         return tabela_arquivo;
 }
 
@@ -100,7 +102,7 @@ void numLinColArquivo (char *arquivo, int *numLin, int *numcol){
             col++;
         }
 
-        if(c == '\n'){
+        if (c == '\n'){
             lin++;
             passou = 1;
         }

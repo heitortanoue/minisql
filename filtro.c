@@ -45,34 +45,3 @@ int indexColunaSelecionada(tabela **tabelas, int num_tabelas, char *qual_coluna,
     *index_tabela = index_selecionado;
     return ncol_filtro;
 }
-
-void defineFiltros (tabela **tabelas, char where[]){ //filtro **
-    int qnt_filtros = contaOcorrenciasString(where, "and");
-    char where_sem_and[strlen(where)];
-    int g = 0;
-    int h = 0;
-    while(where[g] != '\0'){
-        if (where[g] == 'a' && where[g + 1] == 'n' && where[g + 2] == 'd'){
-            where_sem_and[h] = '/';
-            g += 4;
-            h++;
-        } else {
-            where_sem_and[h] = where[g];
-            g++;
-            h++;
-        }
-    }
-    where_sem_and[h] = '\0';
-    printf("%s\n", where_sem_and);
-    
-    char filtros_separados[qnt_filtros][64];
-    char *pont_str;
-    pont_str = strtok(where_sem_and, "/");
-    int i = 0;
-    while (pont_str != NULL){
-        strcpy(filtros_separados[i], pont_str);
-        printf("%s\n", filtros_separados[i]);
-        i++;
-        pont_str = strtok(NULL, "/");   
-    }
-} //Progs.Nivel = "6" and Progs.Programa = Docentes.CodigodoPPG and Progs.Programa = Trabalhos.CodigodoPPG and Trabalhos.Orientador = Docentes.Nome
