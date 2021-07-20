@@ -71,6 +71,7 @@ void FiltrarImprimir (tabela **tabelas, int num_tabelas, char **filtros, int num
 
     for (int linha = 1; linha < tabelas[0]->nlin - 1; linha++) {
         int linha_dentro_condicoes = 1;
+        int arr_index_linha[num_tabelas];
         for (int i = 0; i < num_filtros; i++) {
             int condicao = 1;
             if (tipo_filtro[i]) {
@@ -78,29 +79,41 @@ void FiltrarImprimir (tabela **tabelas, int num_tabelas, char **filtros, int num
                 int ind_tabela;
                 int ind_coluna = indexColunaSelecionada(tabelas, num_tabelas, filtros_separados[i][0], &ind_tabela);
                 condicao = (!strcmp(tabelas[ind_tabela]->dados[linha][ind_coluna], filtros_separados[i][1]));
+                arr_index_linha[ind_tabela] = linha;
                 // if (condicao) {
                 //     printf("V: [%s == %s]\n", tabelas[ind_tabela]->dados[linha][ind_coluna], filtros_separados[i][1]);
                 // } else {
                 //     printf("V: [%s != %s]\n", tabelas[ind_tabela]->dados[linha][ind_coluna], filtros_separados[i][1]);
                 // }
             } else {
-                // COMPARAÇÃO CÉLULAS
+                //COMPARAÇÃO CÉLULAS
                 int ind_tabela1, ind_tabela2;
                 int ind_coluna1 = indexColunaSelecionada(tabelas, num_tabelas, filtros_separados[i][0], &ind_tabela1);
                 int ind_coluna2 = indexColunaSelecionada(tabelas, num_tabelas, filtros_separados[i][1], &ind_tabela2);
-                condicao = (!strcmp(tabelas[ind_tabela1]->dados[linha][ind_coluna1], tabelas[ind_tabela2]->dados[linha][ind_coluna2]));
-                if (condicao) {
-                    printf("C: [%s == %s]\n", tabelas[ind_tabela1]->dados[linha][ind_coluna1], tabelas[ind_tabela2]->dados[linha][ind_coluna2]);
-                } else {
-                    printf("C: [%s != %s]\n", tabelas[ind_tabela1]->dados[linha][ind_coluna1], tabelas[ind_tabela2]->dados[linha][ind_coluna2]);
+                int achou = 0;
+                for (int iterador = 0; iterador < tabelas[ind_tabela1]->nlin; iterador++) {
+                    achou = (!strcmp(tabelas[ind_tabela2]->dados[linha][ind_coluna2], tabelas[ind_tabela1]->dados[iterador][ind_coluna1]));
+                    if (achou) {
+                        achou = 1;
+                        arr_index_linha[ind_tabela2] = linha;
+                        arr_index_linha[ind_tabela1] = iterador;
+                        break;
+                    }
                 }
+                condicao = achou;
             } 
             linha_dentro_condicoes = linha_dentro_condicoes && condicao;
         }
 
+        // printf("[");
+        // for (int i = 0; i < num_tabelas; i++) {
+        //     printf("%d, ", arr_index_linha[i]);
+        // }
+        // printf("]\n");
+
         if (linha_dentro_condicoes) {
             for (int coluna = 0; coluna < num_colunas; coluna++) {
-                printf("%s", tabelas[arr_index_colunas[coluna][0]]->dados[linha][arr_index_colunas[coluna][1]]);
+                printf("%s", tabelas[arr_index_colunas[coluna][0]]->dados[arr_index_linha[arr_index_colunas[coluna][0]]][arr_index_colunas[coluna][1]]);
                 if (num_colunas > 1) {
                     printf("\t");
                 }

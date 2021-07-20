@@ -45,18 +45,18 @@ int main(void) {
     //     printf("[%s (%d)]\n", colunas_selecionadas[i], indexColunaSelecionada(tabelas, num_arquivos, colunas_selecionadas[i], &alo));
     // }
 
-    int num_filtros = contaOcorrenciasString(str_where, " and");
-    char **filtros = separaString(str_where, " and");
 
     if (tem_where) {
+        int num_filtros = contaOcorrenciasString(str_where, " and");
+        char **filtros = separaString(str_where, " and");
         FiltrarImprimir(tabelas, num_arquivos, filtros, num_filtros, colunas_selecionadas, num_colunas_selecionadas);
+        destruirArrayStrings(filtros, num_filtros);
     } else {
         imprimirTabelaResultado(tabelas, colunas_selecionadas, num_arquivos, num_colunas_selecionadas);
     }
 
     destruirArrayStrings(nomes_arquivos, num_arquivos);
     destruirArrayStrings(colunas_selecionadas, num_colunas_selecionadas);
-    destruirArrayStrings(filtros, num_filtros);
     for (int i = 0; i < num_arquivos; i++) {
         fclose(tabelas[i]->arquivo);
         destruirTabela(tabelas[i], tabelas[i]->nlin, tabelas[i]->ncol);       
