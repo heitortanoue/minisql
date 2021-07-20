@@ -91,7 +91,7 @@ char **separaString (char *str_inp, char *espacador) {
     }
     string_formatada[h] = '\0';
     
-    char **arr_dest = malloc(sizeof(char **));
+    char **arr_dest = malloc(sizeof(char *) * num_strings);
     for (int i = 0; i < num_strings; i++) {
         arr_dest[i] = malloc(sizeof(char) * NUM_CARACTERES);
     }
