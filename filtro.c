@@ -124,8 +124,10 @@ void FiltrarImprimir (tabela **tabelas, int num_tabelas, char **filtros, int num
         }
     }
 
-    for (int i = 0; i < num_filtros; i++) {
-        destruirArrayStrings(filtros_separados[i], 2);
+    if (num_filtros) {
+        for (int i = 0; i < num_filtros; i++) {
+            destruirArrayStrings(filtros_separados[i], 2);
+        }
+        free(filtros_separados);
     }
-    free(filtros_separados);
 }
