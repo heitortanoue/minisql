@@ -125,25 +125,3 @@ void numLinColArquivo (char *arquivo, int *numLin, int *numcol){
     *numcol = col;
     fclose(fdlc);
 }
-// select Progs.Sigla, Docentes.Nome from Progs, Docentes
-void imprimirTabelaResultado (tabela **tabelas, char *colunas_selecionadas[], int num_arquivos, int num_colunas) {
-    int menor_index_tabela = 0, index_tabela;
-    int arr_index_colunas[num_colunas][2];
-    for (int i = 0; i < num_colunas; i++) {
-        arr_index_colunas[i][1] = indexColunaSelecionada(tabelas, num_arquivos, colunas_selecionadas[i], &index_tabela);
-        arr_index_colunas[i][0] = index_tabela;
-        if (tabelas[index_tabela]->nlin < tabelas[menor_index_tabela]->nlin) {
-            menor_index_tabela = index_tabela;
-        }
-    }
-    int numero_linhas = tabelas[menor_index_tabela]->nlin;
-    for (int m = 1; m < numero_linhas; m++) {  
-        for (int l = 0; l < num_colunas; l++) {
-            printf("%s\t", tabelas[arr_index_colunas[l][0]]->dados[m][arr_index_colunas[l][1]]);
-        }
-        if (m < numero_linhas - 2) {
-            printf("\n");
-        }
-    }
-}
-

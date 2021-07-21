@@ -48,19 +48,6 @@ int indexColunaSelecionada(tabela **tabelas, int num_tabelas, char *qual_coluna,
 }
 
 void FiltrarImprimir (tabela **tabelas, int num_tabelas, char **filtros, int num_filtros, char** colunas_selecionadas, int num_colunas) {
-    char ***filtros_separados = malloc(sizeof(char ***) * 1);
-    int tipo_filtro[num_filtros];
-    for (int i = 0; i < num_filtros; i++) {
-        filtros_separados[i] = separaString(filtros[i], " =");
-        // VERIFICA SE TEM ASPAS
-        if (strchr(filtros_separados[i][1], '\"')) {
-            tipo_filtro[i] = 1;
-            substring(filtros_separados[i][1], filtros_separados[i][1], "\"", "\"");
-        } else {
-            tipo_filtro[i] = 0;
-        }
-    }
-
     int index_tabela;
     //0: index da tabela e 1: index da coluna selecionada
     int arr_index_colunas[num_colunas][2];
@@ -69,47 +56,60 @@ void FiltrarImprimir (tabela **tabelas, int num_tabelas, char **filtros, int num
         arr_index_colunas[i][0] = index_tabela;
     }
 
+    char ***filtros_separados;
+    int tipo_filtro[num_filtros];
+    if (num_filtros) {
+        filtros_separados = malloc(sizeof(char **) * num_filtros);
+        for (int i = 0; i < num_filtros; i++) {
+            filtros_separados[i] = separaString(filtros[i], " =");
+            // VERIFICA SE TEM ASPAS
+            if (strchr(filtros_separados[i][1], '\"')) {
+                tipo_filtro[i] = 1;
+                substring(filtros_separados[i][1], filtros_separados[i][1], "\"", "\"");
+            } else {
+                tipo_filtro[i] = 0;
+            }
+        }
+    }
+
     for (int linha = 1; linha < tabelas[0]->nlin - 1; linha++) {
         int linha_dentro_condicoes = 1;
         int arr_index_linha[num_tabelas];
-        for (int i = 0; i < num_filtros; i++) {
-            int condicao = 1;
-            if (tipo_filtro[i]) {
-                // COMPARAÇÃO VALORES
-                int ind_tabela;
-                int ind_coluna = indexColunaSelecionada(tabelas, num_tabelas, filtros_separados[i][0], &ind_tabela);
-                condicao = (!strcmp(tabelas[ind_tabela]->dados[linha][ind_coluna], filtros_separados[i][1]));
-                arr_index_linha[ind_tabela] = linha;
-                // if (condicao) {
-                //     printf("V: [%s == %s]\n", tabelas[ind_tabela]->dados[linha][ind_coluna], filtros_separados[i][1]);
-                // } else {
-                //     printf("V: [%s != %s]\n", tabelas[ind_tabela]->dados[linha][ind_coluna], filtros_separados[i][1]);
-                // }
-            } else {
-                //COMPARAÇÃO CÉLULAS
-                int ind_tabela1, ind_tabela2;
-                int ind_coluna1 = indexColunaSelecionada(tabelas, num_tabelas, filtros_separados[i][0], &ind_tabela1);
-                int ind_coluna2 = indexColunaSelecionada(tabelas, num_tabelas, filtros_separados[i][1], &ind_tabela2);
-                int achou = 0;
-                for (int iterador = 0; iterador < tabelas[ind_tabela1]->nlin; iterador++) {
-                    achou = (!strcmp(tabelas[ind_tabela2]->dados[linha][ind_coluna2], tabelas[ind_tabela1]->dados[iterador][ind_coluna1]));
-                    if (achou) {
-                        achou = 1;
-                        arr_index_linha[ind_tabela2] = linha;
-                        arr_index_linha[ind_tabela1] = iterador;
-                        break;
+        arr_index_linha[0] = linha;
+        if (num_filtros) {
+            for (int i = 0; i < num_filtros; i++) {
+                int condicao = 1;
+                if (tipo_filtro[i]) {
+                    // COMPARAÇÃO VALORES
+                    int ind_tabela;
+                    int ind_coluna = indexColunaSelecionada(tabelas, num_tabelas, filtros_separados[i][0], &ind_tabela);
+                    condicao = (!strcmp(tabelas[ind_tabela]->dados[linha][ind_coluna], filtros_separados[i][1]));
+                    arr_index_linha[ind_tabela] = linha;
+                    // if (condicao) {
+                    //     printf("V: [%s == %s]\n", tabelas[ind_tabela]->dados[linha][ind_coluna], filtros_separados[i][1]);
+                    // } else {
+                    //     printf("V: [%s != %s]\n", tabelas[ind_tabela]->dados[linha][ind_coluna], filtros_separados[i][1]);
+                    // }
+                } else {
+                    //COMPARAÇÃO CÉLULAS
+                    int ind_tabela1, ind_tabela2;
+                    int ind_coluna1 = indexColunaSelecionada(tabelas, num_tabelas, filtros_separados[i][0], &ind_tabela1);
+                    int ind_coluna2 = indexColunaSelecionada(tabelas, num_tabelas, filtros_separados[i][1], &ind_tabela2);
+                    int achou = 0;
+                    for (int iterador = 0; iterador < tabelas[ind_tabela1]->nlin; iterador++) {
+                        achou = (!strcmp(tabelas[ind_tabela2]->dados[linha][ind_coluna2], tabelas[ind_tabela1]->dados[iterador][ind_coluna1]));
+                        if (achou) {
+                            achou = 1;
+                            arr_index_linha[ind_tabela2] = linha;
+                            arr_index_linha[ind_tabela1] = iterador;
+                            break;
+                        }
                     }
-                }
-                condicao = achou;
-            } 
-            linha_dentro_condicoes = linha_dentro_condicoes && condicao;
+                    condicao = achou;
+                } 
+                linha_dentro_condicoes = linha_dentro_condicoes && condicao;
+            }
         }
-
-        // printf("[");
-        // for (int i = 0; i < num_tabelas; i++) {
-        //     printf("%d, ", arr_index_linha[i]);
-        // }
-        // printf("]\n");
 
         if (linha_dentro_condicoes) {
             for (int coluna = 0; coluna < num_colunas; coluna++) {
@@ -118,11 +118,14 @@ void FiltrarImprimir (tabela **tabelas, int num_tabelas, char **filtros, int num
                     printf("\t");
                 }
             }
-            printf("\n");
+            if (linha < tabelas[0]->nlin - 2) {
+                printf("\n");
+            }
         }
     }
 
     for (int i = 0; i < num_filtros; i++) {
         destruirArrayStrings(filtros_separados[i], 2);
     }
+    free(filtros_separados);
 }

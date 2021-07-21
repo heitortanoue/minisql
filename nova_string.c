@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define NUM_CARACTERES (128)
+#define NUM_CARACTERES (256)
 #define PASSOUAQUI printf("%s:%d\n", __FILE__, __LINE__);
 
 int substring (char str[], char dest[], char str1[], char str2[]) {
