@@ -47,7 +47,7 @@ tabela *abreArquivoCriaTabela (char *nome_arquivo) {
     char extensao[] = ".tsv";
     char arquivo_atual[strlen(nome_arquivo) + strlen(extensao) + 1];
     int ext_cont = 0;
-    for (int i = 0; i < strlen(nome_arquivo) + strlen(extensao) + 1; i++) {
+    for (unsigned int i = 0; i < strlen(nome_arquivo) + strlen(extensao) + 1; i++) {
         if (i < strlen(nome_arquivo)) {
             arquivo_atual[i] = nome_arquivo[i];
         } else {
@@ -97,7 +97,7 @@ void pegaDadosArquivo (tabela *tabela_alocada, FILE *fd){
 
 
 void numLinColArquivo (char *arquivo, int *numLin, int *numcol){
-    char copia_arquivo[strlen(arquivo) + 1];
+    char copia_arquivo[strlen(arquivo) + 2];
     strcpy(copia_arquivo, arquivo);
     FILE *fdlc;
     fdlc = fopen(copia_arquivo, "r");

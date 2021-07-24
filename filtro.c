@@ -1,13 +1,14 @@
-#include"filtro.h"
-#include"nova_string.h"
+#include "filtro.h"
+#include "nova_string.h"
+#include "arquivo_tabela.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #define PASSOUAQUI printf("%s:%d\n", __FILE__, __LINE__);
 
 int indexColunaSelecionada(tabela **tabelas, int num_tabelas, char *qual_coluna, int *index_tabela){
-    char str_depois_corte[20];
-    char str_antes_corte[15];
+    char str_depois_corte[64];
+    char str_antes_corte[64];
     int j = 0, k = 0;
     int passou = 0;
     int count = 0;
@@ -113,7 +114,10 @@ void FiltrarImprimir (tabela **tabelas, int num_tabelas, char **filtros, int num
 
         if (linha_dentro_condicoes) {
             for (int coluna = 0; coluna < num_colunas; coluna++) {
-                printf("%s", tabelas[arr_index_colunas[coluna][0]]->dados[arr_index_linha[arr_index_colunas[coluna][0]]][arr_index_colunas[coluna][1]]);
+                int ind_tabela = arr_index_colunas[coluna][0];
+                int ind_coluna = arr_index_colunas[coluna][1];
+                int ind_linha = arr_index_linha[arr_index_colunas[coluna][0]];
+                printf("%s", tabelas[ind_tabela]->dados[ind_linha][ind_coluna]);
                 if (num_colunas > 1) {
                     printf("\t");
                 }

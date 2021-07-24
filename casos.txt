@@ -1,0 +1,10 @@
+sselect Progs.Sigla, Progs.Nome from Progs
+select Docentes.Nome, Docentes.Nacionalidade, Docentes.Sexo from Docentes
+select Trabalhos.Ano, Trabalhos.Autor, Trabalhos.Orientador from Trabalhos
+select Trabalhos.Ano, Trabalhos.Autor, Trabalhos.Orientador, Trabalhos.Idioma from Trabalhos
+select Docentes.Nome from Docentes where Docentes.Sexo = "MASCULINO"
+select Trabalhos.Ano, Trabalhos.Autor, Trabalhos.Orientador from Trabalhos where Trabalhos.Idioma = "PORTUGUES"
+select Progs.Sigla, Progs.Nome from Progs
+select Progs.Sigla, Docentes.Nome from Progs, Docentes where Progs.Programa = Docentes.CodigodoPPG
+select Progs.Sigla, Docentes.Nome, Trabalhos.Autor, Trabalhos.Idioma, Docentes.Nacionalidade from Progs, Docentes, Trabalhos where Progs.Nivel = "6" and Progs.Programa = Docentes.CodigodoPPG and Progs.Programa = Trabalhos.CodigodoPPG and Trabalhos.Orientador = Docentes.Nome
+select Progs.Sigla, Docentes.Nome, Trabalhos.Autor, Trabalhos.Idioma, Docentes.Nacionalidade from Progs, Docentes, Trabalhos where Docentes.Nacionalidade = "BRASIL" and Progs.Programa = Docentes.CodigodoPPG and Trabalhos.Idioma = "INGLES" and Trabalhos.CodigodoPPG = Progs.Programa and Trabalhos.Orientador = Docentes.Nome

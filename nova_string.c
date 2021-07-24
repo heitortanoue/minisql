@@ -5,7 +5,7 @@
 #define NUM_CARACTERES (256)
 #define PASSOUAQUI printf("%s:%d\n", __FILE__, __LINE__);
 
-int substring (char str[], char dest[], char str1[], char str2[]) {
+int substring (char str[], char dest[], const char str1[], const char str2[]) {
     int i = 0;
     int ind1 = 0, ind2 = 0;
     while (str[i] != 0) {
@@ -57,8 +57,8 @@ int substring (char str[], char dest[], char str1[], char str2[]) {
     }
 }
 
-int contaOcorrenciasString (char *str, char *pedaco) {
-    int i, j;
+int contaOcorrenciasString (char *str, const char *pedaco) {
+    int i = 0;
     int ocorrencias = 1;
     int l1 = strlen(str);
     int l2 = strlen(pedaco);
@@ -71,7 +71,7 @@ int contaOcorrenciasString (char *str, char *pedaco) {
     return ocorrencias;
 }
 
-char **separaString (char *str_inp, char *espacador) {
+char **separaString (char *str_inp, const char *espacador) {
     int num_strings = contaOcorrenciasString(str_inp, espacador);
     char string_formatada[strlen(str_inp)];
     int g = 0, h = 0;
@@ -101,7 +101,6 @@ char **separaString (char *str_inp, char *espacador) {
     int i = 0;
     while (pont_str != NULL){
         strcpy(arr_dest[i], pont_str);
-        int c = 0;
         i++;
         pont_str = strtok(NULL, "&");   
     }

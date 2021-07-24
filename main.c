@@ -6,8 +6,26 @@
 #include <string.h>
 
 int main(void) {
+    // ESSA PARTE AQUI É PRA FACILITAR COLOCAR AS ENTRADAS [APAGAR QUANDO MANDAR]
+    // FILE *entradas = fopen("casos.txt", "r");
+    // int linha_escolhida;
+    // scanf("%d", &linha_escolhida);
+    // int linha_c = 0;
+    // char c;
+    // char input[1500]; 
+    // while ((c = fgetc(entradas))) {
+    //     if (c == '\n') {
+    //         linha_c++;
+    //     }
+    //     if (linha_c == linha_escolhida - 1) {
+    //         fgets(input, 1024, entradas);
+    //         break;
+    //     }
+    // }
+    // printf("CASO %d: [%s]\n", linha_escolhida, input);
+
     // ENTRADA STRING E DIVISÃO DAS PARTES SELECT, FROM E WHERE
-    char input[1500];
+    char input[1500]; 
     fgets(input, 1024, stdin);
     int tem_where = 1;
     char str_select[500], str_from[500], str_where[500];
@@ -54,4 +72,5 @@ int main(void) {
         fclose(tabelas[i]->arquivo);
         destruirTabela(tabelas[i], tabelas[i]->nlin, tabelas[i]->ncol);       
     }
+    //fclose(entradas);
 }

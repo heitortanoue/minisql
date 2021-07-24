@@ -1,8 +1,6 @@
 #ifndef __ARQUIVO_TABELA_H__
 #define __ARQUIVO_TABELA_H__
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include<stdio.h>
 
 typedef struct {
     int nlin;
