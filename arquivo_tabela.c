@@ -4,9 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 #define NUMCARACT (256)
-#define PASSOUAQUI printf("%s:%d\n", __FILE__, __LINE__);
 
 tabela *alocaDadosTabela (int nlin, int ncol) {
+    // CRIA UMA TABELA VAZIA
     tabela *dados_alocados = malloc (sizeof(tabela) * 1);
        if (dados_alocados == NULL){
             exit(-1);
@@ -31,6 +31,7 @@ tabela *alocaDadosTabela (int nlin, int ncol) {
 
 
 void destruirTabela (tabela *tabela_utilizada, int nlin, int ncol){
+    // DESALOCA A TABELA
     for (int i = 0; i < nlin; i++){
         for(int j = 0; j < ncol; j++){
             free(tabela_utilizada -> dados[i][j]);
@@ -43,6 +44,7 @@ void destruirTabela (tabela *tabela_utilizada, int nlin, int ncol){
 
 
 tabela *abreArquivoCriaTabela (char *nome_arquivo) {
+    // COLOCA INFORAMAÇÕES COMO NOME DO ARQUIVO E NUM LINHAS E NUM COLUNAS NA STRUCT
     int nlin, ncol;
     char extensao[] = ".tsv";
     char arquivo_atual[strlen(nome_arquivo) + strlen(extensao) + 1];
@@ -71,7 +73,8 @@ tabela *abreArquivoCriaTabela (char *nome_arquivo) {
 }
 
 
-void pegaDadosArquivo (tabela *tabela_alocada, FILE *fd){
+void pegaDadosArquivo (tabela *tabela_alocada, FILE *fd) {
+    // COLOCA DADOS DE UM ARQUIVO EM UMA TABELA
     int i = 0;
     int j = 0;
     int k = 0;
@@ -97,6 +100,7 @@ void pegaDadosArquivo (tabela *tabela_alocada, FILE *fd){
 
 
 void numLinColArquivo (char *arquivo, int *numLin, int *numcol){
+    // LE UM ARQUIVO PARA PEGAR SUAS DIMENSOES (N. LINHAS E N. COLUNAS)
     char copia_arquivo[strlen(arquivo) + 1];
     strcpy(copia_arquivo, arquivo);
     FILE *fdlc;
@@ -125,29 +129,9 @@ void numLinColArquivo (char *arquivo, int *numLin, int *numcol){
     *numcol = col;
     fclose(fdlc);
 }
-// select Progs.Sigla, Docentes.Nome from Progs, Docentes
-void imprimirTabelaResultado (tabela **tabelas, char *colunas_selecionadas[], int num_arquivos, int num_colunas) {
-    int menor_index_tabela = 0, index_tabela = 0;
-    int arr_index_colunas[num_colunas][2];
-    for (int i = 0; i < num_colunas; i++) {
-        arr_index_colunas[i][1] = indexColunaSelecionada(tabelas, num_arquivos, colunas_selecionadas[i], &index_tabela);
-        arr_index_colunas[i][0] = index_tabela;
-        if (tabelas[index_tabela]->nlin < tabelas[menor_index_tabela]->nlin) {
-            menor_index_tabela = index_tabela;
-        }
-    }
-    int numero_linhas = tabelas[menor_index_tabela]->nlin;
-    for (int m = 1; m < numero_linhas; m++) {  
-        for (int l = 0; l < num_colunas; l++) {
-            printf("%s\t", tabelas[arr_index_colunas[l][0]]->dados[m][arr_index_colunas[l][1]]);
-        }
-        if (m < numero_linhas - 2) {
-            printf("\n");
-        }
-    }
-}
 
 void liberarMallocsTam3 (char ***matriz_string, int tamanho_linha, int tamanho_coluna){
+    // LIBERA MALLOC DE DIMENSAO 3
     for (int i = 0; i < tamanho_linha; i++){
         for (int j = 0; j < tamanho_coluna; j++){
             free(matriz_string[i][j]);
@@ -158,6 +142,7 @@ void liberarMallocsTam3 (char ***matriz_string, int tamanho_linha, int tamanho_c
 }
 
 void liberarMallocsTam2 (char **lista_string, int tamanho) {
+    // LIBERA MALLOC DE DIMENSAO 2
     for (int i = 0; i < tamanho; i++) {
         free(lista_string[i]);
     }

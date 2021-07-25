@@ -10,6 +10,4 @@ int contaOcorrenciasString (char *str, char *pedaco);
 
 char **separaString (char *str_inp, char *espacador);
 
-void destruirArrayStrings (char **arr_str, int num_strings);
-
 #endif

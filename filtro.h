@@ -7,18 +7,4 @@ int indexColunaSelecionada(tabela **tabelas, int num_tabelas, char *qual_coluna,
 
 void FiltrarImprimir (tabela **tabelas, int num_tabelas, char **filtros, int num_filtros, char** colunas_selecionadas, int num_colunas);
 
-// typedef struct {
-//     int tipo; // 0-CARACT 1-COMPARA
-//     int ntabela;
-//     //int local;
-//     int local_caract;
-//     char caracteristica[64];
-//     int ntabela1;
-//     int ntabela2;
-//     //int local[2];
-//     int local_compara[2]; 
-// } filtro;
-
-//void defineFiltros (tabela **tabelas, char where[]);
-
 #endif

@@ -6,6 +6,8 @@
 #define PASSOUAQUI printf("%s:%d\n", __FILE__, __LINE__);
 
 int substring (char str[], char dest[], char str1[], char str2[]) {
+    // DIVIDE UMA STRING COM BASE EM OUTROS DOIS DELIMITADORES
+    // Exemplo: substring("um dois tres quatro", string_destino, "um ", " tres") => retorna "dois"
     int i = 0;
     int ind1 = 0, ind2 = 0;
     while (str[i] != 0) {
@@ -58,11 +60,11 @@ int substring (char str[], char dest[], char str1[], char str2[]) {
 }
 
 int contaOcorrenciasString (char *str, char *pedaco) {
-    int i, j;
+    // RETORNA O NUMERO DE OCORRENCIAS DE UMA SUBTRING NA STRING
     int ocorrencias = 1;
     int l1 = strlen(str);
     int l2 = strlen(pedaco);
-    for (i = 0; i < l1 - l2 + 1; i++) {
+    for (int i = 0; i < l1 - l2 + 1; i++) {
         if (strstr(str + i, pedaco) == str + i) {
         ocorrencias++;
         i = i + l2 - 1;
@@ -72,6 +74,8 @@ int contaOcorrenciasString (char *str, char *pedaco) {
 }
 
 char **separaString (char *str_inp, char *espacador) {
+    // RETORNA UM ARRAY DE STRINGS, COM BASE NO ESPACADOR DO PARAMETRO
+    // Exemplo: separaString("heitor e torrent", " e ") => retorna ["heitor", "torrent"]
     int num_strings = contaOcorrenciasString(str_inp, espacador);
     char string_formatada[strlen(str_inp)];
     int g = 0, h = 0;
@@ -101,16 +105,8 @@ char **separaString (char *str_inp, char *espacador) {
     int i = 0;
     while (pont_str != NULL){
         strcpy(arr_dest[i], pont_str);
-        int c = 0;
         i++;
         pont_str = strtok(NULL, "&");   
     }
     return arr_dest;
-}
-
-void destruirArrayStrings (char **arr_str, int num_strings) {
-    for (int i = 0; i < num_strings; i++) {
-        free(arr_str[i]);
-    }
-    free(arr_str);
 }
