@@ -24,4 +24,8 @@ void numLinColArquivo (char *arquivo, int *numLin, int *numcol);
 
 void imprimirTabelaResultado (tabela **tabelas, char *colunas_selecionadas[], int num_arquivos, int num_colunas);
 
+void liberarMallocsTam3 (char ***matriz_string, int tamanho_linha, int tamanho_coluna);
+
+void liberarMallocsTam2 (char **lista_string, int tamanho);
+
 #endif

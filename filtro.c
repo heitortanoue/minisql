@@ -48,7 +48,21 @@ int indexColunaSelecionada(tabela **tabelas, int num_tabelas, char *qual_coluna,
 }
 
 void FiltrarImprimir (tabela **tabelas, int num_tabelas, char **filtros, int num_filtros, char** colunas_selecionadas, int num_colunas) {
-    char ***filtros_separados = malloc(sizeof(char ***) * 1);
+    char ***filtros_separados = malloc(sizeof(char **) * num_filtros);
+    /*for (int i = 0; i < num_filtros; i++){
+        filtros_separados[i] = malloc(sizeof(char *) * 2);
+        for (int j = 0; j < 2; j++){
+            filtros_separados[i][j] = malloc(sizeof(char) * 32);
+        }
+    }*/
+    //select Progs.Sigla, Docentes.Nome, Trabalhos.Autor, Trabalhos.Idioma, Docentes.Nacionalidade 
+    //from Progs, Docentes, Trabalhos 
+    //where Docentes.Nacionalidade = "BRASIL" and 
+    //      Progs.Programa = Docentes.CodigodoPPG and 
+    //      Trabalhos.Idioma = "INGLES" and 
+    //      Trabalhos.CodigodoPPG = Progs.Programa and 
+    //      Trabalhos.Orientador = Docentes.Nome
+
     int tipo_filtro[num_filtros];
     for (int i = 0; i < num_filtros; i++) {
         filtros_separados[i] = separaString(filtros[i], " =");
@@ -122,7 +136,8 @@ void FiltrarImprimir (tabela **tabelas, int num_tabelas, char **filtros, int num
         }
     }
 
-    for (int i = 0; i < num_filtros; i++) {
+    /*for (int i = 0; i < num_filtros; i++) {
         destruirArrayStrings(filtros_separados[i], 2);
-    }
+    }*/
+    liberarMallocsTam3 (filtros_separados, num_filtros, 2);
 }
