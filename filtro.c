@@ -7,30 +7,11 @@
 #define PASSOUAQUI printf("%s:%d\n", __FILE__, __LINE__);
 
 int indexColunaSelecionada(tabela **tabelas, int num_tabelas, char *qual_coluna, int *index_tabela){
-    char str_depois_corte[64];
-    char str_antes_corte[64];
-    int j = 0, k = 0;
-    int passou = 0;
-    int count = 0;
-    while (qual_coluna[count]) {
-        if (passou){
-            str_depois_corte[j] = qual_coluna[count];
-            j++;
-        } else {
-            str_antes_corte[k] = qual_coluna[count];
-            k++;  
-        }
-        if(qual_coluna[count] == '.'){
-            passou = 1;
-        }
-        count++;
-    }
-    str_depois_corte[j] = 0;
-    str_antes_corte[k - 1] = 0;
+    char **strings = separaString(qual_coluna, ".");
 
     int index_selecionado;
     for (int i = 0; i < num_tabelas; i++) {
-        if (!strcmp(tabelas[i]->nome_arquivo, str_antes_corte)) {
+        if (strcmp(tabelas[i]->nome_arquivo, strings[0]) == 0) {
             index_selecionado = i;
             break;
         }
@@ -38,13 +19,15 @@ int indexColunaSelecionada(tabela **tabelas, int num_tabelas, char *qual_coluna,
 
     int ncol_filtro;
     for (int i = 0; i < tabelas[index_selecionado]->ncol; i++) {
-        if (!strcmp(tabelas[index_selecionado] -> dados[0][i], str_depois_corte)) { 
+        if (strcmp(tabelas[index_selecionado]->dados[0][i], strings[1]) == 0) { 
             ncol_filtro = i;
             break;
+        } else {
         }
     }
 
     *index_tabela = index_selecionado;
+    destruirArrayStrings(strings, 2);
     return ncol_filtro;
 }
 

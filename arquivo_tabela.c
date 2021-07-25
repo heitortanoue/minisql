@@ -45,16 +45,10 @@ void destruirTabela (tabela *tabela_utilizada, int nlin, int ncol){
 tabela *abreArquivoCriaTabela (char *nome_arquivo) {
     int nlin, ncol;
     char extensao[] = ".tsv";
-    char arquivo_atual[strlen(nome_arquivo) + strlen(extensao) + 1];
-    int ext_cont = 0;
-    for (unsigned int i = 0; i < strlen(nome_arquivo) + strlen(extensao) + 1; i++) {
-        if (i < strlen(nome_arquivo)) {
-            arquivo_atual[i] = nome_arquivo[i];
-        } else {
-            arquivo_atual[i] = extensao[ext_cont];
-            ext_cont++;
-        }
-    }
+    unsigned int lenght = strlen(nome_arquivo) + strlen(extensao) + 1;
+    char arquivo_atual[lenght];
+    strcpy(arquivo_atual, nome_arquivo);
+    strcat(arquivo_atual, extensao);
     numLinColArquivo(arquivo_atual, &nlin, &ncol);
     FILE *fd;
     fd = fopen(arquivo_atual, "r");

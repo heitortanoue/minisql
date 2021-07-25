@@ -40,10 +40,10 @@ int main(void) {
     // CRIAÇÃO DE UM ARRAY COM NOMES DOS ARQUIVOS DO FROM
     int num_arquivos = contaOcorrenciasString(str_from, ",");
     char **nomes_arquivos;
-    nomes_arquivos = separaString(str_from, ",");
+    nomes_arquivos = separaString(str_from, ", ");
 
     // CRIAÇÃO DE UMA TABELA PARA CADA ARQUIVO COM SEUS DADOS
-    tabela *tabelas[num_arquivos];
+    tabela **tabelas = malloc(sizeof(tabela *) * num_arquivos);
     for (int i = 0; i < num_arquivos; i++) {
         tabelas[i] = abreArquivoCriaTabela(nomes_arquivos[i]);
     }
@@ -72,5 +72,6 @@ int main(void) {
         fclose(tabelas[i]->arquivo);
         destruirTabela(tabelas[i], tabelas[i]->nlin, tabelas[i]->ncol);       
     }
+    free(tabelas);
     //fclose(entradas);
 }

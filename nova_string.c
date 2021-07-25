@@ -82,7 +82,7 @@ char **separaString (char *str_inp, const char *espacador) {
         }
         if (achou_palavra){
             string_formatada[h] = '&';
-            g += strlen(espacador);
+            g += strlen(espacador) - 1;
         } else {
             string_formatada[h] = str_inp[g];
         }
