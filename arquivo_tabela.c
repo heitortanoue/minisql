@@ -127,7 +127,7 @@ void numLinColArquivo (char *arquivo, int *numLin, int *numcol){
 }
 // select Progs.Sigla, Docentes.Nome from Progs, Docentes
 void imprimirTabelaResultado (tabela **tabelas, char *colunas_selecionadas[], int num_arquivos, int num_colunas) {
-    int menor_index_tabela = 0, index_tabela;
+    int menor_index_tabela = 0, index_tabela = 0;
     int arr_index_colunas[num_colunas][2];
     for (int i = 0; i < num_colunas; i++) {
         arr_index_colunas[i][1] = indexColunaSelecionada(tabelas, num_arquivos, colunas_selecionadas[i], &index_tabela);
@@ -147,3 +147,19 @@ void imprimirTabelaResultado (tabela **tabelas, char *colunas_selecionadas[], in
     }
 }
 
+void liberarMallocsTam3 (char ***matriz_string, int tamanho_linha, int tamanho_coluna){
+    for (int i = 0; i < tamanho_linha; i++){
+        for (int j = 0; j < tamanho_coluna; j++){
+            free(matriz_string[i][j]);
+        }
+        free(matriz_string[i]);
+    }
+    free(matriz_string);
+}
+
+void liberarMallocsTam2 (char **lista_string, int tamanho) {
+    for (int i = 0; i < tamanho; i++) {
+        free(lista_string[i]);
+    }
+    free(lista_string);
+}
